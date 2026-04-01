@@ -6,6 +6,7 @@ from datetime import datetime, timedelta
 from fastapi.security import OAuth2PasswordBearer
 from src.config.config import settings
 from src.exceptions.custom_exception import AuthenticationException
+import secrets
 
 
 pwd_context = CryptContext(
@@ -58,3 +59,10 @@ def decode_access_token(token: str) -> dict:
         raise AuthenticationException(
             "Invalid access token"
         ) from e
+
+
+def generate_password_reset_token() -> str:
+    """
+    Generate a secure random token for password reset
+    """
+    return secrets.token_urlsafe(32)

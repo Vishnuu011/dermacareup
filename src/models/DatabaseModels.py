@@ -67,6 +67,21 @@ class UserModel(Base):
     scans = relationship("ScanModel", back_populates="user")
 
 
+class PasswordResetToken(Base):
+    __tablename__ = "password_reset_tokens"
+
+    token_id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
+    user_id = Column(String, ForeignKey("users.user_id"), nullable=False)
+    token = Column(String, unique=True, nullable=False)
+    
+    expires_at = Column(DateTime, nullable=False)
+    is_used = Column(Boolean, default=False)
+    used_at = Column(DateTime, nullable=True)
+    
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
+
 
 
 class SubscriptionsModel(Base):

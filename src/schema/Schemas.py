@@ -93,7 +93,31 @@ class AccountMeResponse(BaseModel):
     user: UserResponse
     organization: OrganizationResponse      
 
+class AccountUpdateRequest(BaseModel):
+    user: Optional[UserUpdate] = None
+    organization: Optional[OrganizationUpdate] = None
 
+class AccountUpdateResponse(BaseModel):
+    user: Optional[UserResponse] = None
+    organization: Optional[OrganizationResponse] = None        
+
+
+class PasswordResetRequest(BaseModel):
+    email: EmailStr
+    token: str
+    new_password: str
+
+
+class PasswordResetResponse(BaseModel):
+    message: str = "Password reset successfully"
+
+
+class ForgotPasswordRequest(BaseModel):
+    email: EmailStr
+
+
+class ForgotPasswordResponse(BaseModel):
+    message: str = "Password reset email sent successfully"
 
 
 # ===================== SUBSCRIPTION SCHEMAS =====================
