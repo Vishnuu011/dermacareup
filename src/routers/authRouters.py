@@ -1,7 +1,22 @@
-from fastapi import APIRouter, Depends, status, HTTPException
+from fastapi import (
+    APIRouter, 
+    Depends, 
+    status, 
+    HTTPException
+)
+
 from fastapi.responses import JSONResponse
-from src.helpers.deps import get_current_user, get_current_organization
-from src.helpers.security import hash_password, verify_password, create_access_token, generate_password_reset_token
+from src.helpers.deps import (
+    get_current_user, 
+    get_current_organization
+)
+from src.helpers.security import (
+    hash_password, 
+    verify_password, 
+    create_access_token, 
+    generate_password_reset_token
+)
+
 from src.schema.Schemas import (
     LoginResponse, 
     RegisterRequest, 
@@ -17,12 +32,20 @@ from src.schema.Schemas import (
     ForgotPasswordRequest,
     ForgotPasswordResponse
 )
+
 from src.helpers.deps import get_db
 from src.helpers.email_utils import send_password_reset_email
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
-from src.models.DatabaseModels import UserModel, OrganizationModel, PasswordResetToken
-from src.exceptions.custom_exception import DatabaseException, AuthenticationException
+from src.models.DatabaseModels import (
+    UserModel, 
+    OrganizationModel, 
+    PasswordResetToken
+)
+from src.exceptions.custom_exception import (
+    DatabaseException, 
+    AuthenticationException
+)
 from datetime import timedelta, datetime
 from src.helpers.deps import get_current_user
 from src.logger.custom_logger import logger
