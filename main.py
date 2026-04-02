@@ -9,6 +9,8 @@ from src.database.sessionmaker import engine
 from src.logger.custom_logger import logger
 from src.routers.authRouters import auth_router
 from src.routers.paymentRoutes import payment_router
+from src.routers.patientRoutes import patient_router
+from src.routers.scanRoutes import scan_router
 from src.exceptions.custom_exception import CustomException
 # Import all models to register them with Base metadata
 from src.models.DatabaseModels import (
@@ -77,6 +79,8 @@ app.add_middleware(
 
 app.include_router(auth_router)
 app.include_router(payment_router)
+app.include_router(patient_router)
+app.include_router(scan_router)
 
 
 

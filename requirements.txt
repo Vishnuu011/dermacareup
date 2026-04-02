@@ -24,3 +24,5 @@ pytest
 pytest-asyncio
 pytest-cov
 httpx
+
+ultralytics
