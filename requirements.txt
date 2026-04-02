@@ -11,7 +11,7 @@ python-jose
 argon2-cffi
 python-dotenv
 email-validator
-psycopg2
+
 
 
 python-multipart
