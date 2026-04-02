@@ -183,6 +183,62 @@ class PaymentResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
 
+# ===================== STRIPE PAYMENT SCHEMAS =====================
+
+class CreatePaymentIntentRequest(BaseModel):
+    amount: int = Field(..., description="Amount in cents")
+    currency: str = Field(default="usd", description="Currency code")
+    description: str = Field(default="", description="Payment description")
+    subscription_id: Optional[UUID] = None
+
+
+class PaymentIntentResponse(BaseModel):
+    success: bool
+    client_secret: str
+    payment_intent_id: str
+    amount: int
+    currency: str
+    status: str
+
+
+class StripeSubscriptionRequest(BaseModel):
+    price_id: str = Field(..., description="Stripe price ID for the plan")
+    plan_name: str
+    scan_limit: int
+
+
+class StripeSubscriptionResponse(BaseModel):
+    success: bool
+    subscription_id: str
+    customer_id: str
+    status: str
+    current_period_start: int
+    current_period_end: int
+
+
+class UpdatePaymentStatusRequest(BaseModel):
+    stripe_payment_id: str
+    payment_status: str
+
+
+class WebhookEventResponse(BaseModel):
+    success: bool
+    message: str
+
+
+class PaymentMethodRequest(BaseModel):
+    card_number: str
+    exp_month: int
+    exp_year: int
+    cvc: str
+
+
+class PaymentMethodResponse(BaseModel):
+    success: bool
+    payment_method_id: str
+    card_last4: str
+
+
 # ===================== PATIENT SCHEMAS =====================
 
 class PatientCreate(BaseModel):

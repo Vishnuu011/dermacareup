@@ -21,6 +21,11 @@ class Settings(BaseSettings):
     SMTP_USERNAME: str = ""
     SMTP_PASSWORD: str = ""
     SMTP_FROM_EMAIL: str = ""
+    
+    # Stripe Configuration
+    STRIPE_SECRET_KEY: str
+    STRIPE_PUBLIC_KEY: str 
+    STRIPE_WEBHOOK_SECRET: str
 
     class Config:
         env_file = ".env"
