@@ -26,3 +26,9 @@ pytest-cov
 httpx
 
 ultralytics
+langchain-groq
+langchain
+langchain-core
+langchain-community
+cloudinary
+reportlab

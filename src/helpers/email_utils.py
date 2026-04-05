@@ -1,8 +1,10 @@
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+from email.mime.application import MIMEApplication
 from src.config.config import settings
 from src.logger.custom_logger import logger
+
 
 
 def send_password_reset_email(user_email: str, reset_token: str):
@@ -10,16 +12,13 @@ def send_password_reset_email(user_email: str, reset_token: str):
     Send password reset email to user
     """
     try:
-        # Check if SMTP is configured
         if not settings.SMTP_USERNAME or not settings.SMTP_PASSWORD or not settings.SMTP_FROM_EMAIL:
             logger.warning("SMTP credentials not configured. Email will not be sent.")
             logger.info(f"Password reset token for {user_email}: {reset_token}")
             return
         
         reset_url = f"http://127.0.0.1:8000/api/v1/auth/password-reset?token={reset_token}"
-        
         subject = "Password Reset Request"
-        
         html_body = f"""
         <html>
             <body style="font-family: Arial, sans-serif; background-color: #f5f5f5; padding: 20px;">
@@ -51,13 +50,11 @@ def send_password_reset_email(user_email: str, reset_token: str):
         
         message.attach(MIMEText(html_body, "html"))
         
-        # Send email
         with smtplib.SMTP_SSL(settings.SMTP_SERVER, settings.SMTP_PORT) as server:
             server.login(settings.SMTP_USERNAME, settings.SMTP_PASSWORD)
             server.sendmail(settings.SMTP_FROM_EMAIL, user_email, message.as_string())
         
         logger.info(f"Password reset email sent to {user_email}")
-        
     except Exception as e:
         logger.error(f"Failed to send password reset email: {str(e)}")
         raise Exception(f"Failed to send email: {str(e)}")

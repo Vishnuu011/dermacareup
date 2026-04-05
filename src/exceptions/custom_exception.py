@@ -107,6 +107,34 @@ class AccessDeniedException(CustomException):
         )
 
 
+class CloudinaryUploadException(CustomException):
+    """Raised when Cloudinary upload fails"""
+    def __init__(self, message: str = "Failed to upload image to Cloudinary", detail: Optional[str] = None):
+        super().__init__(
+            message=message,
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            error_code="CLOUDINARY_UPLOAD_FAILED",
+            detail=detail
+        )
+
+class AgentException(CustomException):
+    def __init__(self, message: str = "Failed to generate recomentation", detail: Optional[str] = None):
+        super().__init__(
+            message=message,
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            error_code="AGENT_RECOMMENDATION_FAIL",
+            detail=detail
+        )     
+
+class AIPipelineException(CustomException):
+    def __init__(self, message: str = "Failed to AI Pipeline", detail: Optional[str] = None):
+        super().__init__(
+            message=message,
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            error_code="AI_PIPELINE_FAIL",
+            detail=detail
+        )           
+
 # ===================== RESOURCE NOT FOUND EXCEPTIONS =====================
 
 class ResourceNotFoundException(CustomException):

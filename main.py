@@ -23,6 +23,7 @@ from src.models.DatabaseModels import (
     DetectionModel,
     RecommendationModel,
     ReportModel,
+    ScanAnalysisModel,
     ScanUsageModel
 )
 

@@ -1,5 +1,5 @@
 from pydantic import BaseModel, EmailStr, Field, ConfigDict
-from typing import List, Optional
+from typing import List, Optional, Dict, Any
 from datetime import datetime
 from uuid import UUID
 
@@ -353,6 +353,33 @@ class ReportResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
 
+# ===================== SCAN ANALYSIS SCHEMAS =====================
+
+class ScanAnalysisCreate(BaseModel):
+    scan_id: UUID
+    summary: str
+    analysis_status: Optional[str] = "completed"
+    analysis_data: Optional[Dict[str, Any]] = None
+
+
+class ScanAnalysisUpdate(BaseModel):
+    summary: Optional[str] = None
+    analysis_status: Optional[str] = None
+    analysis_data: Optional[Dict[str, Any]] = None
+
+
+class ScanAnalysisResponse(BaseModel):
+    analysis_id: UUID
+    scan_id: UUID
+    summary: Optional[str] = None
+    analysis_status: str
+    analysis_data: Optional[Dict[str, Any]] = None
+    started_at: datetime
+    completed_at: datetime
+
+    model_config = ConfigDict(from_attributes=True)
+
+
 # ===================== SCAN SCHEMAS =====================
 
 class ScanCreate(BaseModel):
@@ -383,6 +410,7 @@ class ScanResponse(BaseModel):
 class ScanDetailResponse(ScanResponse):
     detections: List[DetectionDetailResponse] = Field(default_factory=list)
     report: Optional[ReportResponse] = None
+    analysis: Optional[ScanAnalysisResponse] = None
     patient: Optional[PatientResponse] = None
     user: Optional[UserResponse] = None
 
